@@ -38,10 +38,16 @@ class CreateCustomersTable extends Migration
             'type' => 'VARCHAR', 
             'constraint' => 20
              ],
+            "package_id" => [
+                "type" => "INT",
+                "constraint" => 11,
+                "unsigned" => true
+            ]
             
         ]);
         $this->forge->addPrimaryKey("id");
         $this->forge->addForeignKey("user_id", "users", "id", "CASCADE", "CASCADE");
+        $this->forge->addForeignKey("package_id", "packages", "id", "CASCADE", "CASCADE");
         $this->forge->createTable("customers");
     }
 

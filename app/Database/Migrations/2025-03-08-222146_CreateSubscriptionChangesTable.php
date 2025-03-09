@@ -14,6 +14,7 @@ class CreateSubscriptionChangesTable extends Migration
             'old_package_id'=> ['type' => 'INT', 'constraint' => 11, 'unsigned' => true],
             'new_package_id'=> ['type' => 'INT', 'constraint' => 11, 'unsigned' => true],
             'requested_at'  => ['type' => 'DATETIME',],
+            "status"        => ['type' => 'ENUM', 'constraint' => ["Normal","Good","Excellent","Seasonal", "Offer"]],
         ]);
 
         $this->forge->addPrimaryKey('id');
