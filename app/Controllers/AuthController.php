@@ -19,7 +19,6 @@ class AuthController extends ResourceController
             'username' => 'required|min_length[8]|is_unique[users.username]',
             "email" => 'required|valid_email|is_unique[users.email]',
             'password' => 'required|min_length[8]',
-            'role'     => 'required|in_list[customer,agent]'
         ];
 
         if (!$this->validate($rules)) {
@@ -36,8 +35,10 @@ class AuthController extends ResourceController
         $userModel->insert($data);
         $userId = $userModel->insertID();
 
+      
+
         // get ID role by role name
-        $roleName = $this->request->getVar('role');
+        $roleName = $this->request->getVar('role') ?? "customer";
         $roleQuery = $db->table('roles')->where('role_name', $roleName)->get()->getRow();
         if (!$roleQuery) {
         return $this->fail("Role tidak valid");

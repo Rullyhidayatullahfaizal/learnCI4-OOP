@@ -6,11 +6,18 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+$routes->get('/login', 'WebController::login'); 
+$routes->get('/register', 'WebController::register'); 
+$routes->get('/management', 'WebController::management'); 
+
+
+
 
 // routes user
 $routes->group('api',function($routes){
    $routes->post('register', 'AuthController::register'); 
    $routes->post('login', 'AuthController::login');
+   
 
    $routes->group("customers",['filter' => 'auth'],function($routes){
     //    $routes->resource('users');

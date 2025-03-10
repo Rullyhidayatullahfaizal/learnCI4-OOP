@@ -38,36 +38,42 @@ class CustomerController extends ResourceController
         return $this->respond($res);   
     }
 
-    public function update($id = null)
-    {
-        $customer = $this->model-> find($id);
-        if(!$customer){
-            return $this->failNotFound("Customer Not Found");
-        }
-        $data = $this->request->getRawInput();
-        if(isset($data['status']) && session()->get('role') !== "agent" ){
-            return $this->failForbidden('customers cannont change staus');
-        }
+            public function update($id = null)
+            {
+                $customer = $this->model-> find($id);
+                if(!$customer){
+                    return $this->failNotFound("Customer Not Found");
+                }
+                $data = $this->request->getJSON(true);
+                // var_dump($data);exit;
 
-        $this->model->update($id, $data);
-        return $this->respond([
-            "status" => 201,
-            "message" => "Success To Update Customer",
-        ]); 
-    }
+                if (empty($data)) {
+                    return $this->fail("No data provided for update.");
+                }
 
-    public function delete($id = null)
-    {
-        if(session()->get('role') !== "agent"){
-            return $this->failForbidden("Only agent can delete customer");
-        };
+                if(isset($data['status']) && session()->get('role') !== "agent" ){
+                    return $this->failForbidden('customers cannont change staus');
+                }
 
-        $customer = $this->model->find($id);
-        if(!$customer){
-            return $this->failNotFound("Customer Not found");
-        };
+                $this->model->update($id, $data);
+                return $this->respond([
+                    "status" => 201,
+                    "message" => "Success To Update Customer",
+                ]); 
+            }
 
-        $this->model->delete($id);
-        return $this->respondDeleted(["message" => "Customer deleted successfully"]);
-    }    
+        public function delete($id = null)
+        {
+            if(session()->get('role') !== "agent"){
+                return $this->failForbidden("Only agent can delete customer");
+            };
+
+            $customer = $this->model->find($id);
+            if(!$customer){
+                return $this->failNotFound("Customer Not found");
+            };
+
+            $this->model->delete($id);
+            return $this->respondDeleted(["message" => "Customer deleted successfully"]);
+        }    
 }

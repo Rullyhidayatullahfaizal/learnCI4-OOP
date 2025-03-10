@@ -12,17 +12,19 @@ class AuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $header = $request->getServer('HTTP_AUTHORIZATION');
+        $header = $request->getHeaderLine('AUTHORIZATION');
         if(!$header){
             return response()->setJSON(['messege' => "Authorization header not found"])->setStatusCode(401);
         }
 
-        $token = explode('',$header)[1];
+        $token = explode(' ',$header)[1] ?? null;
         try{
             $key = getenv('JWT_SECRET');
             $decoded = JWT::decode($token, new Key($key,'HS256'));
-            
+
             $request->user =$decoded;
+
+            session()->set('role',$decoded->role);
         }catch(\Exception$e){
             return response() -> setJSON(["message" => "invalid Token"])->setStatusCode(401);
         }
