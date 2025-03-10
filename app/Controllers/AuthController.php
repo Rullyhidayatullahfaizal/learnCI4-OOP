@@ -85,3 +85,4 @@ class AuthController extends ResourceController
     return $this->respond(['token' => $token, 'role' => $user['role']]);
 }
 }
+

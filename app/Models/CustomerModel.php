@@ -12,7 +12,7 @@ class CustomerModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['user_id', 'rut', 'name', 'address', 'email', 'phone',];
+    protected $allowedFields    = ['user_id', 'rut', 'name', 'address', 'email', 'phone','package_id'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
