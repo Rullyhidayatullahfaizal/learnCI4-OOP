@@ -29,3 +29,13 @@ $routes->group('api',function($routes){
 
 
 });
+
+// routes subscriptionChange;
+$routes->group("api",['filter' => 'auth'],function($routes){
+    
+      $routes->get('subscription-changes', 'SubscriptionChangeController::index');
+    $routes->get('subscription-changes/(:num)', 'SubscriptionChangeController::show/$1');
+    $routes->post('subscription-changes', 'SubscriptionChangeController::create');
+    $routes->put('subscription-changes/(:num)', 'SubscriptionChangeController::update/$1');
+    $routes->delete('subscription-changes/(:num)', 'SubscriptionChangeController::delete/$1');
+});

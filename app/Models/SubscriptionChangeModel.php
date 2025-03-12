@@ -9,7 +9,7 @@ class SubscriptionChangeModel extends Model
     protected $table            = 'subscription_changes';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
+    protected $returnType       = \App\Entities\SubscriptionChange::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = ['customer_id', 'old_package_id', 'new_package_id' , 'requested_at', 'status'];
